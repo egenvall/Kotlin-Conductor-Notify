@@ -31,6 +31,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
+
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
@@ -44,6 +46,12 @@ dependencies {
     compile 'org.jetbrains.anko:anko-appcompat-v7:' + ANKO_VERSION
     compile "org.jetbrains.anko:anko-recyclerview-v7:" + ANKO_VERSION
     compile "org.jetbrains.anko:anko-design:" + ANKO_VERSION
+    kapt 'com.google.dagger:dagger-compiler:2.5'
+    compile 'com.google.dagger:dagger:2.5'
+
+}
+kapt {
+    generateStubs = true
 }
 repositories {
     mavenCentral()
