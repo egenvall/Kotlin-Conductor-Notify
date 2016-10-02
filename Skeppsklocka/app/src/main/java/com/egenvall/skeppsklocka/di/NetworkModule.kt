@@ -31,7 +31,7 @@ class NetworkModule {
     @Named("accessKey")
     @Singleton
     fun provideAccessKey(): String {
-        return "AIzaSyB65Fj36BX07cgg_AGYAdTtSnW7VH2wrrw";
+        return "key=AIzaSyB65Fj36BX07cgg_AGYAdTtSnW7VH2wrrw";
     }
 
     @Provides

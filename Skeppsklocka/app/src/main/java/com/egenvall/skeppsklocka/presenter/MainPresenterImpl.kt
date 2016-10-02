@@ -22,7 +22,9 @@ class MainPresenterImpl @Inject constructor(firebaseInteractor: FirebaseInteract
         subscription = this.firebaseInteractor.postPushNotification("Test").subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        {response -> view.pushNotificationCallback() }, { err -> } );
+                        {response ->
+                            Log.d("MainPresenter", "Response: " + response.responseMessage)
+                            view.pushNotificationCallback() }, { err -> Log.d("MainPresenter", "Error response") } );
     }
 
     override fun bindView(view: MainView) {
