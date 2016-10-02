@@ -1,8 +1,9 @@
 package com.egenvall.skeppsklocka.presenter
 
 import com.egenvall.skeppsklocka.ui.MainView
+import javax.inject.Inject
 
-class MainPresenterImpl : MainPresenter {
+class MainPresenterImpl @Inject constructor() : MainPresenter {
     lateinit var view : MainView
     override fun sendPushNotification() {
 

@@ -10,6 +10,7 @@ import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import com.bluelinelabs.conductor.changehandler.VerticalChangeHandler
+import com.egenvall.skeppsklocka.App
 import com.egenvall.skeppsklocka.Keyboards
 import com.egenvall.skeppsklocka.R
 import com.egenvall.skeppsklocka.extensions.showSnackbar
@@ -22,6 +23,11 @@ import javax.inject.Inject
 class MainController : Controller(), MainView{
     var message = ""
     @Inject lateinit var presenter : MainPresenterImpl
+
+    init {
+        App.graph.inject(this)
+        presenter.bindView(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return MainControllerUI().createView(AnkoContext.create(inflater.context, this))
