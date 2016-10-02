@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "569277050347",
+    "firebase_url": "https://crepidoklocka.firebaseio.com",
+    "project_id": "crepidoklocka",
+    "storage_bucket": "crepidoklocka.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569277050347:android:a7ee795a2e9d3081",
+        "android_client_info": {
+          "package_name": "com.egenvall.skeppsklocka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "569277050347-h3k6s5hqslptmjumufvljib9ll28eo9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2f_hWy6nlUDrEC0gGtJVCqkBx4b03GaE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

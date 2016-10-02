@@ -1,15 +1,28 @@
 package com.egenvall.skeppsklocka.presenter
 
+import android.util.Log
+import com.egenvall.skeppsklocka.network.FirebaseInteractor
 import com.egenvall.skeppsklocka.ui.MainView
+import rx.Subscription
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 import javax.inject.Inject
 
-class MainPresenterImpl @Inject constructor() : MainPresenter {
+class MainPresenterImpl @Inject constructor(firebaseInteractor: FirebaseInteractor) : MainPresenter {
     lateinit var view : MainView
+    lateinit var firebaseInteractor : FirebaseInteractor
+    lateinit var subscription : Subscription
+
+    init {
+        this.firebaseInteractor = firebaseInteractor
+    }
+
+
     override fun sendPushNotification() {
-
-        //Success?
-        view.pushNotificationCallback()
-
+        subscription = this.firebaseInteractor.postPushNotification("Test").subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        {response -> view.pushNotificationCallback() }, { err -> } );
     }
 
     override fun bindView(view: MainView) {
