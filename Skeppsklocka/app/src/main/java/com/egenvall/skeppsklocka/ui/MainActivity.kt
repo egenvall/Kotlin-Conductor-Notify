@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         App.graph.inject(this)
         setContentView(R.layout.activity_main_kotlin)
         FirebaseMessaging.getInstance().subscribeToTopic("push")
-        Log.d("Main",FirebaseInstanceId.getInstance().getToken())
+        Log.d("Main",""+FirebaseInstanceId.getInstance().getToken())
 
 
         router = Conductor.attachRouter(this, controller_container, savedInstanceState);

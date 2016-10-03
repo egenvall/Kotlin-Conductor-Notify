@@ -37,8 +37,8 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         // Check if message contains a data payload.
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(TAG, "Message data payload: " + remoteMessage.data.get("message"));
+            //sendNotification(remoteMessage.data.get("message"))
         }
-
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
@@ -60,7 +60,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
                 PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         builder.setSound(alarmSound)
-
+        builder.setSmallIcon(R.mipmap.ic_launcher)
         builder.setContentIntent(contentIntent)
         builder.setAutoCancel(true)
         builder.setLights(Color.BLUE, 500, 500)
