@@ -1,7 +1,7 @@
 # Skeppsklocka
 Whenever something good happens in the office, ring the bell in your phone and everyone in the office with the app will get a push notification with the bell sound and your message.
 
-##Written in Kotlin for learning purposes using
+##Android application written in Kotlin for learning purposes, using
 
 [Kotlin] (https://github.com/JetBrains/kotlin)
 
