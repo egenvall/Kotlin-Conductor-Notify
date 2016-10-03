@@ -9,6 +9,7 @@ import rx.schedulers.Schedulers
 import javax.inject.Inject
 
 class MainPresenterImpl @Inject constructor(firebaseInteractor: FirebaseInteractor) : MainPresenter {
+    val TAG  = "MainPresenter"
     lateinit var view : MainView
     lateinit var firebaseInteractor : FirebaseInteractor
     lateinit var subscription : Subscription
@@ -19,12 +20,17 @@ class MainPresenterImpl @Inject constructor(firebaseInteractor: FirebaseInteract
 
 
     override fun sendPushNotification() {
-        subscription = this.firebaseInteractor.postPushNotification("Test").subscribeOn(Schedulers.io())
+        subscription = this.firebaseInteractor.postPushNotification("Test")
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        {response ->
-                            Log.d("MainPresenter", "Response: " + response.responseMessage)
-                            view.pushNotificationCallback() }, { err -> Log.d("MainPresenter", "Error response") } );
+                        {
+                            response ->
+                            Log.d(TAG, "Response: " + response.responseMessage)
+                            view.pushNotificationCallback()
+                        },
+                        { err -> Log.d(TAG, "Error response") }
+                )
     }
 
     override fun bindView(view: MainView) {
@@ -36,6 +42,6 @@ class MainPresenterImpl @Inject constructor(firebaseInteractor: FirebaseInteract
     }
 
     override fun onDestroy() {
-
+        if(!subscription.isUnsubscribed) subscription.unsubscribe()
     }
 }
