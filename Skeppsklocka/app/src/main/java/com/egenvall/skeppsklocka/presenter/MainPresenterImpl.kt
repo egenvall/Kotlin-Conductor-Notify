@@ -19,14 +19,14 @@ class MainPresenterImpl @Inject constructor(firebaseInteractor: FirebaseInteract
     }
 
 
-    override fun sendPushNotification() {
-        subscription = this.firebaseInteractor.postPushNotification("Test")
+    override fun sendPushNotification(message : String) {
+        subscription = this.firebaseInteractor.postPushNotification(message)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {
                             response ->
-                            Log.d(TAG, "Response: " + response.responseMessage)
+                            Log.d(TAG, "Response: ${response.responseMessage}")
                             view.pushNotificationCallback()
                         },
                         { err -> Log.d(TAG, "Error response") }

@@ -15,13 +15,14 @@ import kotlinx.android.synthetic.main.activity_main_kotlin.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var router : Router
+    val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         App.graph.inject(this)
         setContentView(R.layout.activity_main_kotlin)
         FirebaseMessaging.getInstance().subscribeToTopic("push")
-        Log.d("Main",""+FirebaseInstanceId.getInstance().getToken())
+        Log.d(TAG,"${FirebaseInstanceId.getInstance().getToken()}")
 
 
         router = Conductor.attachRouter(this, controller_container, savedInstanceState);

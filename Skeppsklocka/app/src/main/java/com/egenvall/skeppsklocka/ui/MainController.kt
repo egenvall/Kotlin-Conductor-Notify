@@ -8,13 +8,11 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
-import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import com.bluelinelabs.conductor.changehandler.VerticalChangeHandler
 import com.egenvall.skeppsklocka.App
 import com.egenvall.skeppsklocka.Keyboards
 import com.egenvall.skeppsklocka.R
 import com.egenvall.skeppsklocka.extensions.showSnackbar
-import com.egenvall.skeppsklocka.presenter.MainPresenter
 import com.egenvall.skeppsklocka.presenter.MainPresenterImpl
 import org.jetbrains.anko.*
 import javax.inject.Inject
@@ -40,7 +38,7 @@ class MainController : Controller(), MainView{
     fun onClockClicked() {
         Keyboards.hideKeyboard(view.context, view)
         view.showSnackbar("Notification sent")
-        presenter.sendPushNotification()
+        presenter.sendPushNotification(message)
     }
 
     override fun pushNotificationCallback(){

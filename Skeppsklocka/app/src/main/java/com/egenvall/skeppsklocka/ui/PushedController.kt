@@ -18,7 +18,6 @@ class PushedController:Controller() {
                 gravity = Gravity.CENTER
                 backgroundColor = Color.GREEN
 
-
                 textView("SUCCESS"){
                     textSize = 30f
                     textColor = Color.WHITE
