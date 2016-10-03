@@ -7,6 +7,8 @@ import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bluelinelabs.conductor.Controller
+import org.jetbrains.anko.AnkoComponent
 
 fun ViewGroup.hide() {
     visibility = View.GONE

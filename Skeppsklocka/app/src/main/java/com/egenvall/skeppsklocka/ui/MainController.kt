@@ -1,5 +1,6 @@
 package com.egenvall.skeppsklocka.ui
 
+import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -15,17 +16,21 @@ import com.egenvall.skeppsklocka.R
 import com.egenvall.skeppsklocka.extensions.showSnackbar
 import com.egenvall.skeppsklocka.presenter.MainPresenterImpl
 import org.jetbrains.anko.*
+import org.w3c.dom.Text
 import javax.inject.Inject
 
 
-class MainController : Controller(), MainView{
+class MainController(bundle: Bundle) : Controller(), MainView{
     var message = ""
     @Inject lateinit var presenter : MainPresenterImpl
+
 
     init {
         App.graph.inject(this)
         presenter.bindView(this)
     }
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return MainControllerUI().createView(AnkoContext.create(inflater.context, this))

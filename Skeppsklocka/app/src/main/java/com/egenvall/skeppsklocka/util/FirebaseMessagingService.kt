@@ -56,8 +56,9 @@ class FirebaseMessagingService : FirebaseMessagingService() {
      * @param messageBody FCM message body received.
      */
     private fun sendNotification(messageBody: String?) {
-        val builder = NotificationCompat.Builder(this).setContentTitle("Notifications Example").setContentText(messageBody)
+        val builder = NotificationCompat.Builder(this).setContentTitle("Crepido").setContentText("Milstolpe!!")
         val notificationIntent = Intent(this, MainActivity::class.java)
+        notificationIntent.putExtra("message",messageBody)
         val contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT)
         val sound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE

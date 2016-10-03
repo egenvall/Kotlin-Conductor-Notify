@@ -1,11 +1,13 @@
 package com.egenvall.skeppsklocka.ui
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
+import com.bluelinelabs.conductor.changehandler.VerticalChangeHandler
 import com.egenvall.skeppsklocka.App
 import com.egenvall.skeppsklocka.R
 import com.google.firebase.iid.FirebaseInstanceId
@@ -19,16 +21,23 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val startingIntent : Intent? = intent
+        //Awesome about Kotlin, won't give Nullpointer Exception even if passed intent is null
         App.graph.inject(this)
         setContentView(R.layout.activity_main_kotlin)
         FirebaseMessaging.getInstance().subscribeToTopic("push")
         Log.d(TAG,"${FirebaseInstanceId.getInstance().getToken()}")
 
+        //Null if no message is passed
+        val bundleMessage = startingIntent?.getStringExtra("message")
+        Log.d(TAG,"Starting intent message: ${bundleMessage}")
+
+
 
         router = Conductor.attachRouter(this, controller_container, savedInstanceState);
-        if (!router.hasRootController()) {
-            router.setRoot(RouterTransaction.with(MainController()));
-        }
+            if (!router.hasRootController()) {
+                router.setRoot(RouterTransaction.with(MainController(startingIntent?.extras)));
+            }
     }
 
     override fun onBackPressed() {
