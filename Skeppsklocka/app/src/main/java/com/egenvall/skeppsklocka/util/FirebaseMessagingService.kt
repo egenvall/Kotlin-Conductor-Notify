@@ -2,10 +2,12 @@ package com.egenvall.skeppsklocka.util
 
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.media.RingtoneManager
+import android.net.Uri
 import android.support.v4.app.NotificationCompat
 import android.util.Log
 import com.egenvall.skeppsklocka.R
@@ -58,8 +60,11 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         val notificationIntent = Intent(this, MainActivity::class.java)
         val contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT)
-        val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        builder.setSound(alarmSound)
+        val sound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
+                + "://" + getPackageName() + "/raw/shipbell");
+
+
+        builder.setSound(sound)
         builder.setSmallIcon(R.mipmap.ic_launcher)
         builder.setContentIntent(contentIntent)
         builder.setAutoCancel(true)
