@@ -37,13 +37,13 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         // Check if message contains a data payload.
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(TAG, "Message data payload: " + remoteMessage.data.get("message"));
-            //sendNotification(remoteMessage.data.get("message"))
+            sendNotification(remoteMessage.data.get("message"))
         }
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
             var body : String? = remoteMessage.notification.body
-            sendNotification(body)
+            //sendNotification(body)
         }
 
     }
