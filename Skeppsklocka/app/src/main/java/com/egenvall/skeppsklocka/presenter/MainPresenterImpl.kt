@@ -18,7 +18,12 @@ class MainPresenterImpl @Inject constructor(firebaseInteractor: FirebaseInteract
         this.firebaseInteractor = firebaseInteractor
     }
 
-
+    /**
+    * Through RxJava, ask our Network Interactor to perform an action (post a notification to firebase)
+     * and subscribe to the result. Depending on if the action was successful or not, tell the view
+     * to update with appropiate information
+     *
+     * */
     override fun sendPushNotification(message : String) {
         subscription = this.firebaseInteractor.postPushNotification(message)
                 .subscribeOn(Schedulers.io())
@@ -38,7 +43,7 @@ class MainPresenterImpl @Inject constructor(firebaseInteractor: FirebaseInteract
     }
 
     override fun unbindView() {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        throw UnsupportedOperationException("not implemented")
     }
 
     override fun onDestroy() {

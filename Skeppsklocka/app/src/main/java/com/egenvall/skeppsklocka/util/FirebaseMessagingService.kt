@@ -15,39 +15,25 @@ import com.egenvall.skeppsklocka.ui.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
-
+/**
+ * Class for handling FCM messages.
+ * Our Messages only include data payload
+ */
 class FirebaseMessagingService : FirebaseMessagingService() {
-
-
-    private val TAG = "FbMessagingService"
+    private val TAG = "FirebaeMessagingService"
 
     /**
      * Called when message is received.
-
      * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
      */
     // [START receive_message]
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
-        //TODO Play Services after app was in background
-        // If the application is in the foreground handle both data and notification messages here.
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
         Log.d(TAG, "From: " + remoteMessage!!.from)
-
-
-
         // Check if message contains a data payload.
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(TAG, "Message data payload: " + remoteMessage.data.get("message"));
             sendNotification(remoteMessage.data.get("message"))
         }
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            var body : String? = remoteMessage.notification.body
-            //sendNotification(body)
-        }
-
     }
 
     /**
@@ -58,12 +44,12 @@ class FirebaseMessagingService : FirebaseMessagingService() {
     private fun sendNotification(messageBody: String?) {
         val builder = NotificationCompat.Builder(this).setContentTitle("Crepido").setContentText("Milstolpe!!")
         val notificationIntent = Intent(this, MainActivity::class.java)
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
         notificationIntent.putExtra("message",messageBody)
         val contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT)
         val sound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
                 + "://" + getPackageName() + "/raw/shipbell");
-
 
         builder.setSound(sound)
         builder.setSmallIcon(R.mipmap.ic_launcher)
@@ -73,7 +59,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         val pattern = longArrayOf(500, 500, 500, 500, 500, 500, 500, 500, 500)
         builder.setVibrate(pattern)
         builder.setStyle(NotificationCompat.InboxStyle())
-// Add as notification
+        // Add as notification
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.notify(1, builder.build())
     }

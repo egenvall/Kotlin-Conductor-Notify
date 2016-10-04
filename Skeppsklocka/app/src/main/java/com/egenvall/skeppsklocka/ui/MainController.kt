@@ -17,7 +17,10 @@ import com.egenvall.skeppsklocka.presenter.MainPresenterImpl
 import org.jetbrains.anko.*
 import javax.inject.Inject
 
-
+/**
+ * View containing a TextField (message) and an ImageButton (ship's bell).
+ * When ImageButton is pressed, ask presenter to sendNotification(message)
+ */
 class MainController : Controller(), MainView{
     var message = ""
     var TAG = "MainController"
