@@ -11,11 +11,14 @@ import com.egenvall.skeppsklocka.util.BundleBuilder
 import org.jetbrains.anko.*
 
 
-class NotificationOpenController(notificationMessage : String) : Controller(BundleBuilder(Bundle()).putString("message",notificationMessage).build()) {
+class NotificationOpenController(bundle: Bundle?) : Controller(bundle) {
     lateinit var message : String
 
     init {
-        message = notificationMessage
+        var string :String? = bundle?.getString("message")
+        if (string != null){
+            message = string
+        }
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return NotificationOpenControllerUI().createView(AnkoContext.create(inflater.context, this))

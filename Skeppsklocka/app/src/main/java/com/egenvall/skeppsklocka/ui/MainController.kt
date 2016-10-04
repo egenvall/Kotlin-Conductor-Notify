@@ -1,6 +1,7 @@
 package com.egenvall.skeppsklocka.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -20,12 +21,22 @@ import org.w3c.dom.Text
 import javax.inject.Inject
 
 
-class MainController(bundle: Bundle) : Controller(), MainView{
+class MainController(bundle : Bundle?) : Controller(), MainView{
     var message = ""
+    var TAG = "MainController"
+    var bundl : Bundle?
     @Inject lateinit var presenter : MainPresenterImpl
 
 
     init {
+        if (bundle != null ){
+            Log.d(TAG, "Received bundle: ${bundle.getString("message")}")
+            bundl = bundle
+        }
+        else{
+            Log.d(TAG,"BUNDLE WAS NULL")
+            bundl = null
+        }
         App.graph.inject(this)
         presenter.bindView(this)
     }
@@ -33,6 +44,9 @@ class MainController(bundle: Bundle) : Controller(), MainView{
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+        if (bundl != null){
+            transitionToNotificationOpenController(bundl)
+        }
         return MainControllerUI().createView(AnkoContext.create(inflater.context, this))
     }
 
@@ -46,6 +60,11 @@ class MainController(bundle: Bundle) : Controller(), MainView{
         presenter.sendPushNotification(message)
     }
 
+    fun transitionToNotificationOpenController(bundl: Bundle?){
+        router.pushController(RouterTransaction.with(NotificationOpenController(bundl))
+                .pushChangeHandler(VerticalChangeHandler())
+                .popChangeHandler(VerticalChangeHandler()))
+    }
     override fun pushNotificationCallback(){
         router.pushController(RouterTransaction.with(PushedController())
                 .pushChangeHandler(VerticalChangeHandler())

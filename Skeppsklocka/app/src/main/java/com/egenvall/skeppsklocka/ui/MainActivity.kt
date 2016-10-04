@@ -4,9 +4,8 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.bluelinelabs.conductor.Conductor
-import com.bluelinelabs.conductor.Router
-import com.bluelinelabs.conductor.RouterTransaction
+import android.view.ViewGroup
+import com.bluelinelabs.conductor.*
 import com.bluelinelabs.conductor.changehandler.VerticalChangeHandler
 import com.egenvall.skeppsklocka.App
 import com.egenvall.skeppsklocka.R
@@ -32,10 +31,16 @@ class MainActivity : AppCompatActivity() {
         val bundleMessage = startingIntent?.getStringExtra("message")
         Log.d(TAG,"Starting intent message: ${bundleMessage}")
 
+        router = Conductor.attachRouter(this, controller_container, savedInstanceState)
 
-
-        router = Conductor.attachRouter(this, controller_container, savedInstanceState);
+        if(router != null){
+            Log.d(TAG,"ROUTER NOT NULL")
+        }
+        else{
+            Log.d(TAG,"ROUTER NULL")
+        }
             if (!router.hasRootController()) {
+                Log.d(TAG,"ATTATCHING ROUTER")
                 router.setRoot(RouterTransaction.with(MainController(startingIntent?.extras)));
             }
     }
