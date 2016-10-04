@@ -12,6 +12,8 @@ import com.egenvall.skeppsklocka.R
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main_kotlin.*
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_kotlin)
         FirebaseMessaging.getInstance().subscribeToTopic("push")
         Log.d(TAG,"${FirebaseInstanceId.getInstance().getToken()}")
+        
 
         //Null if no message is passed
         val bundleMessage = startingIntent?.getStringExtra("message")
@@ -33,21 +36,37 @@ class MainActivity : AppCompatActivity() {
 
         router = Conductor.attachRouter(this, controller_container, savedInstanceState)
 
-        if(router != null){
-            Log.d(TAG,"ROUTER NOT NULL")
+        if(startingIntent?.extras != null){
+            transitionToNotificationOpenController(startingIntent?.extras)
         }
         else{
-            Log.d(TAG,"ROUTER NULL")
-        }
+            if(router != null){
+                Log.d(TAG,"ROUTER NOT NULL")
+            }
+            else{
+                Log.d(TAG,"ROUTER NULL")
+            }
             if (!router.hasRootController()) {
                 Log.d(TAG,"ATTATCHING ROUTER")
-                router.setRoot(RouterTransaction.with(MainController(startingIntent?.extras)));
+                router.setRoot(RouterTransaction.with(MainController()));
             }
+        }
+
+
     }
 
     override fun onBackPressed() {
         if (!router.handleBack()) {
             super.onBackPressed()
         }
+    }
+
+    fun transitionToNotificationOpenController(bundl: Bundle?){
+        Log.d(TAG,""+router.backstack.toString())
+        router.pushController(RouterTransaction.with(NotificationOpenController(bundl))
+                .pushChangeHandler(VerticalChangeHandler())
+                .popChangeHandler(VerticalChangeHandler()))
+        Log.d(TAG,""+router.backstack.toString())
+
     }
 }
