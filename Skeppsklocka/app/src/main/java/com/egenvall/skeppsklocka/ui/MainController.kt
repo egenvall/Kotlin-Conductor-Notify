@@ -1,13 +1,17 @@
 package com.egenvall.skeppsklocka.ui
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.ImageButton
 import android.widget.ImageView
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
+import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import com.bluelinelabs.conductor.changehandler.VerticalChangeHandler
 import com.egenvall.skeppsklocka.App
 import com.egenvall.skeppsklocka.Keyboards
@@ -15,13 +19,15 @@ import com.egenvall.skeppsklocka.R
 import com.egenvall.skeppsklocka.extensions.showSnackbar
 import com.egenvall.skeppsklocka.presenter.MainPresenterImpl
 import org.jetbrains.anko.*
+import kotlinx.android.synthetic.main.activity_main_kotlin.controller_container
+
 import javax.inject.Inject
 
 /**
  * View containing a TextField (message) and an ImageButton (ship's bell).
  * When ImageButton is pressed, ask presenter to sendNotification(message)
  */
-class MainController : Controller(), MainView{
+class  MainController : Controller(), MainView{
     var message = ""
     var TAG = "MainController"
     @Inject lateinit var presenter : MainPresenterImpl
@@ -46,25 +52,34 @@ class MainController : Controller(), MainView{
     }
     override fun pushNotificationCallback(){
         router.pushController(RouterTransaction.with(PushedController())
-                .pushChangeHandler(VerticalChangeHandler())
-                .popChangeHandler(VerticalChangeHandler()))
+                .pushChangeHandler(FadeChangeHandler())
+                .popChangeHandler(FadeChangeHandler()))
     }
 
     inner class MainControllerUI() : AnkoComponent<MainController> {
         override fun createView(ui: AnkoContext<MainController>) = with(ui) {
             verticalLayout {
                 gravity = Gravity.CENTER
+                backgroundResource = R.drawable.background
 
-                imageButton{
-                    imageResource = R.drawable.skeppsklocka
+                /* Linkback to http://www.kameleon.pics required, no commercial use*/
+                val imageButt = imageButton{
+                    id = 1
+                    imageResource = R.drawable.large_bell_icon
                     scaleType = ImageView.ScaleType.CENTER_CROP
+                    backgroundColor = Color.TRANSPARENT
                     onClick { onClockClicked() }
-                }.lparams(width = 600, height = 600)
+                }.lparams(width = 600, height = 600){
+                    bottomMargin = 25
+                }
 
                 editText(message) {
-                    hint = "Meddelande"
+                    hintTextColor = Color.WHITE
+                    textColor = Color.WHITE
+                    hint = "WRITE YOUR MESSAGE HERE"
                     imeOptions = EditorInfo.IME_ACTION_NEXT
                     singleLine = true
+                    setTypeface(Typeface.defaultFromStyle(Typeface.BOLD))
                     textChangedListener {
                         onTextChanged { text, start, before, count ->
                             messageUpdated(text.toString())

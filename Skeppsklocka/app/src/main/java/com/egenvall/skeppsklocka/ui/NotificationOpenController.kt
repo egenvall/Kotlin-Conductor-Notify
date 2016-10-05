@@ -6,7 +6,9 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.bluelinelabs.conductor.Controller
+import com.egenvall.skeppsklocka.R
 import com.egenvall.skeppsklocka.util.BundleBuilder
 import org.jetbrains.anko.*
 
@@ -34,7 +36,15 @@ class NotificationOpenController(bundle: Bundle) : Controller(bundle) {
         override fun createView(ui: AnkoContext<NotificationOpenController>) = with(ui) {
             verticalLayout{
                 gravity = Gravity.CENTER
-                backgroundColor = Color.RED
+                backgroundResource = R.color.colorPrimaryDark
+
+                /*imageView(){
+                    imageResource = R.drawable.large_first_place_medal
+                    scaleType = ImageView.ScaleType.CENTER_CROP
+                    backgroundColor = Color.TRANSPARENT
+                }.lparams(width = 600, height = 600){
+                    bottomMargin = 25
+                }*/
 
                 textView(mMessage){
                     textSize = 30f

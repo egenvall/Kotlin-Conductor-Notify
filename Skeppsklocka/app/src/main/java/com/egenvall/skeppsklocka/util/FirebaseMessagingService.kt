@@ -14,6 +14,7 @@ import com.egenvall.skeppsklocka.R
 import com.egenvall.skeppsklocka.ui.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import org.jetbrains.anko.intentFor
 
 /**
  * Class for handling FCM messages.
@@ -31,8 +32,9 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "From: " + remoteMessage!!.from)
         // Check if message contains a data payload.
         if (remoteMessage.data.isNotEmpty()) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.data.get("message"));
-            sendNotification(remoteMessage.data.get("message"))
+            val message = remoteMessage?.data.get("message") ?: "Message was null, passing this instead"
+            Log.d(TAG, "Message data payload: ${message}")
+            sendNotification(message)
         }
     }
 
@@ -41,11 +43,9 @@ class FirebaseMessagingService : FirebaseMessagingService() {
 
      * @param messageBody FCM message body received.
      */
-    private fun sendNotification(messageBody: String?) {
+    private fun sendNotification(messageBody: String) {
         val builder = NotificationCompat.Builder(this).setContentTitle("Crepido").setContentText("Milstolpe!!")
-        val notificationIntent = Intent(this, MainActivity::class.java)
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-        notificationIntent.putExtra("message",messageBody)
+        val notificationIntent = intentFor<MainActivity>("message" to messageBody)
         val contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT)
         val sound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
@@ -56,7 +56,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         builder.setContentIntent(contentIntent)
         builder.setAutoCancel(true)
         builder.setLights(Color.BLUE, 500, 500)
-        val pattern = longArrayOf(500, 500, 500, 500, 500, 500, 500, 500, 500)
+        val pattern = longArrayOf(500, 500, 500, 500, 500)
         builder.setVibrate(pattern)
         builder.setStyle(NotificationCompat.InboxStyle())
         // Add as notification
