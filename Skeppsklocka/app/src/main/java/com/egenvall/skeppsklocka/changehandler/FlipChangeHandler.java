@@ -1,7 +1,7 @@
 package com.egenvall.skeppsklocka.changehandler;
 
 /**
- * Created by Kim on 10/5/2016.
+ * Taken from Conductor Github Demo
  */
 
 import android.animation.Animator;
