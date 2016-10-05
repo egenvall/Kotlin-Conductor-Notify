@@ -13,6 +13,7 @@ import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import com.bluelinelabs.conductor.changehandler.VerticalChangeHandler
+import com.bumptech.glide.Glide
 import com.egenvall.skeppsklocka.App
 import com.egenvall.skeppsklocka.Keyboards
 import com.egenvall.skeppsklocka.R
@@ -41,6 +42,10 @@ class  MainController : Controller(), MainView{
         return MainControllerUI().createView(AnkoContext.create(inflater.context, this))
     }
 
+    override fun onDestroy(){
+        super.onDestroy()
+    }
+
     fun messageUpdated(newText : String){
         message = newText
     }
@@ -61,10 +66,10 @@ class  MainController : Controller(), MainView{
             verticalLayout {
                 gravity = Gravity.CENTER
                 backgroundResource = R.drawable.background
+                //backgroundResource = R.color.colorPrimary
 
                 /* Linkback to http://www.kameleon.pics required, no commercial use*/
-                val imageButt = imageButton{
-                    id = 1
+                imageButton{
                     imageResource = R.drawable.large_bell_icon
                     scaleType = ImageView.ScaleType.CENTER_CROP
                     backgroundColor = Color.TRANSPARENT
