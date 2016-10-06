@@ -1,4 +1,4 @@
-# Skeppsklocka
+# Notify - Notify your team
 Whenever something good happens in the office, ring the bell in your phone and everyone in the office with the app will get a push notification with the bell sound and your message.
 
 App in Foreground(left) and app not open at all (right)
