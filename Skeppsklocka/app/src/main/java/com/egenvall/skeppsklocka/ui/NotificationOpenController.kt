@@ -49,7 +49,12 @@ class NotificationOpenController(message:String = "Standard") : Controller() {
                 textView(mMessage){
                     textSize = 30f
                     textColor = Color.WHITE
-                }.lparams(width = wrapContent, height = wrapContent)
+                    leftPadding = 25
+                    rightPadding = 25
+                }.lparams(width = wrapContent, height = wrapContent){
+                    leftMargin = 40
+                    rightMargin = 40
+                }
             }
         }
     }
