@@ -45,7 +45,7 @@ class NotificationOpenController(message:String = "Standard") : Controller() {
         override fun createView(ui: AnkoContext<NotificationOpenController>) = with(ui) {
             verticalLayout{
                 gravity = Gravity.CENTER
-                backgroundResource = R.color.colorPrimaryDark
+                backgroundResource = R.color.colorPrimary
                 textView(mMessage){
                     textSize = 30f
                     textColor = Color.WHITE

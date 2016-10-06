@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#4795f5</color>
-    <color name="colorPrimaryDark">#207FF0</color>
+    <color name="colorPrimaryDark">#de505e</color>
     <color name="colorPrimaryLight">#6EACF7</color>
     <color name="colorAccent">#FF4081</color>
     <color name="paperPlaneBg">#26b7d1</color>
     <color name="reverseBgColor">#FF9129</color>
     <color name="pushedText">#ffffff</color>
+    <color name="ccolorPrimary">#207FF0</color>
+
 </resources>
