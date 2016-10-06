@@ -16,6 +16,7 @@ import org.jetbrains.anko.*
 class  MainController : Controller(){
     var TAG = "MainController"
     lateinit var mFrame :FrameLayout
+    lateinit  var childRouter : Router
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return MainControllerUI().createView(AnkoContext.create(inflater.context, this))
@@ -23,9 +24,18 @@ class  MainController : Controller(){
 
     override fun onAttach(view: View) {
         super.onAttach(view)
-        val childRouter = getChildRouter(mFrame, null).setPopsLastView(false)
+        childRouter = getChildRouter(mFrame, null).setPopsLastView(false)
         if (!childRouter.hasRootController()) {
             childRouter.setRoot(RouterTransaction.with(ChildController()))
+        }
+    }
+
+    override fun handleBack(): Boolean {
+        if(childRouter.backstackSize == 1){
+            return activity.moveTaskToBack(true)
+        }
+        else{
+            return super.handleBack()
         }
     }
     inner class MainControllerUI() : AnkoComponent<MainController> {

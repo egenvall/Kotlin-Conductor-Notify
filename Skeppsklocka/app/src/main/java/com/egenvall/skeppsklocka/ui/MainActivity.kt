@@ -17,7 +17,7 @@ import org.jetbrains.anko.clearTop
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var router : Router
+    lateinit var mRouter : Router
     val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,55 +25,48 @@ class MainActivity : AppCompatActivity() {
         App.graph.inject(this)
         setContentView(R.layout.activity_main_kotlin)
         FirebaseMessaging.getInstance().subscribeToTopic("push")
-        Log.d(TAG,"ONCREATE: ${FirebaseInstanceId.getInstance().getToken()}")
-
-        router = Conductor.attachRouter(this, controller_container, savedInstanceState)
-        if (!router.hasRootController()) {
-            var bundle = checkBundleForMessage()
-            if (bundle != null){
-                router.setRoot(RouterTransaction.with(NotificationOpenController(bundle)));
+        mRouter = Conductor.attachRouter(this, controller_container, savedInstanceState)
+        if (!mRouter.hasRootController()) {
+            var notificationMessage = checkBundleForMessage()
+            if (notificationMessage != null){
+                mRouter.setRoot(RouterTransaction.with(NotificationOpenController(notificationMessage)));
             }
             else{
-                router.setRoot(RouterTransaction.with(MainController()));
+                mRouter.setRoot(RouterTransaction.with(MainController()));
 
             }
         }
     }
 
     override fun onBackPressed() {
-        if (!router.handleBack()) {
+        if (!mRouter.handleBack()) {
             super.onBackPressed()
         }
     }
 
     fun transitionToNotificationOpenController(bundle: String){
-        router.pushController(RouterTransaction.with(NotificationOpenController(bundle))
+        mRouter.pushController(RouterTransaction.with(NotificationOpenController(bundle))
                 .pushChangeHandler(VerticalChangeHandler())
                 .popChangeHandler(VerticalChangeHandler()))
     }
 
     fun checkBundleForMessage() : String?{
-        var extraMessage : String? = intent?.extras?.getString("message")
-        if(extraMessage != null){
-            Log.d(TAG,"${extraMessage}")
-            intent.removeExtra("message") //HOW TO REMOVE THIS EXTRA
-            return extraMessage
-        }
-        else{
-            return null
-        }
+        val notificationMessage = intent?.getStringExtra("message")
+        intent.removeExtra("message")
+        return notificationMessage ?: null
     }
 
 
     /**
      * Handle eventual passed Intent from FirebaseMessagingService
-     * i.e Launch the controller responsible for displaying the FCM Message
+     * i.e Launch the controller responsible for displaying the FCM Message when we dont
+     * have to create an activity.
      */
     override fun onResume(){
         super.onResume()
-        val bundle = checkBundleForMessage()
-        if (bundle != null){
-            transitionToNotificationOpenController(bundle);
+        val notificationMessage = checkBundleForMessage()
+        if (notificationMessage != null){
+            transitionToNotificationOpenController(notificationMessage);
         }
     }
 
@@ -81,20 +74,10 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * MainActivity is defined in AndroidManifest.xml as android:launchMode="singleTop"
-     * onNewIntent acts as an entrypoint whenever an intent is received pointing to MainActivity,
-     * since we don't want to launch a new instance of the Activity.
+     * onNewIntent acts as an entrypoint whenever an intent is received while MainActivity is already created.
+     *
      */
     override fun onNewIntent(intent : Intent){
-        /*BUG:
-        * Scenarios in MainController(The Main View):
-        * HOME Button is pressed: Activity is stopped and put to background, however the state is saved.
-        * BACK Button is pressed: Activity is popped from stack and destroyed.
-        * When
-        *
-        * BUG IS PROBABLY INTRODUCED BECAUSE MAINCONTROLLER IS PUSHED TO STACK BEFORE CHILDCONTROLLER IS CREATED
-        *
-        *
-        * */
         Log.d(TAG,"ON NEW INTENT")
         setIntent(intent)
     }

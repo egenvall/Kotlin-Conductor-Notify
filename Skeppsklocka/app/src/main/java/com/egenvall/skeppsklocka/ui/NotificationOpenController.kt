@@ -1,18 +1,14 @@
 package com.egenvall.skeppsklocka.ui
 
 import android.graphics.Color
-import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
-import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
+import com.bluelinelabs.conductor.changehandler.VerticalChangeHandler
 import com.egenvall.skeppsklocka.R
-import com.egenvall.skeppsklocka.util.BundleBuilder
 import org.jetbrains.anko.*
 
 /**
@@ -31,7 +27,7 @@ class NotificationOpenController(message:String = "Standard") : Controller() {
     override fun handleBack(): Boolean {
         if(router.backstackSize < 2){
             super.handleBack()
-            router.setRoot(RouterTransaction.with(MainController()).pushChangeHandler(HorizontalChangeHandler()));
+            router.setRoot(RouterTransaction.with(MainController()).pushChangeHandler(VerticalChangeHandler()));
         }
         else{
             super.handleBack()
