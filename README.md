@@ -8,8 +8,13 @@ App in Foreground(left) and app not open at all (right)
 
 ##Android application written in Kotlin for learning purposes, using
 
+
+
 [Kotlin] (https://github.com/JetBrains/kotlin)
 
 [Anko] (https://github.com/Kotlin/anko) - DSL for creating UI through code instead of XML
 
 [Conductor] (https://github.com/bluelinelabs/Conductor) - Build View based Android applications
+
+[Icons By Kameleon pics](http://www.kameleon.pics)
+[Background image from freepik](http://www.freepik.com/)
