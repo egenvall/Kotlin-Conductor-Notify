@@ -2,12 +2,15 @@ package com.egenvall.skeppsklocka.ui
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.bluelinelabs.conductor.Controller
+import com.bluelinelabs.conductor.RouterTransaction
+import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
 import com.egenvall.skeppsklocka.R
 import com.egenvall.skeppsklocka.util.BundleBuilder
 import org.jetbrains.anko.*
@@ -15,18 +18,28 @@ import org.jetbrains.anko.*
 /**
  * View for displaying a received message in the Data payload from FCM
  */
-class NotificationOpenController(bundle: Bundle) : Controller(bundle) {
+class NotificationOpenController(message:String = "Standard") : Controller() {
     lateinit private var mMessage : String
 
     init {
-        var receivedMessage = bundle.getString("message")
-        if (receivedMessage != null){
-            mMessage = receivedMessage
-        }
+            mMessage = message
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return NotificationOpenControllerUI().createView(AnkoContext.create(inflater.context, this))
     }
+
+    override fun handleBack(): Boolean {
+        if(router.backstackSize < 2){
+            super.handleBack()
+            router.setRoot(RouterTransaction.with(MainController()).pushChangeHandler(HorizontalChangeHandler()));
+        }
+        else{
+            super.handleBack()
+            router.popCurrentController()
+        }
+        return true
+    }
+
 
     /**
      * Define layout through Anko DSL.
@@ -37,15 +50,6 @@ class NotificationOpenController(bundle: Bundle) : Controller(bundle) {
             verticalLayout{
                 gravity = Gravity.CENTER
                 backgroundResource = R.color.colorPrimaryDark
-
-                /*imageView(){
-                    imageResource = R.drawable.large_first_place_medal
-                    scaleType = ImageView.ScaleType.CENTER_CROP
-                    backgroundColor = Color.TRANSPARENT
-                }.lparams(width = 600, height = 600){
-                    bottomMargin = 25
-                }*/
-
                 textView(mMessage){
                     textSize = 30f
                     textColor = Color.WHITE

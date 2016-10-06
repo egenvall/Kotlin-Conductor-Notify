@@ -1,13 +1,16 @@
 package com.egenvall.skeppsklocka.ui
 
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.bluelinelabs.conductor.Controller
+import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.egenvall.skeppsklocka.R
+import com.egenvall.skeppsklocka.changehandler.FlipChangeHandler
 import org.jetbrains.anko.*
 
 class  MainController : Controller(){
