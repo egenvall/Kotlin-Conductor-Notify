@@ -20,6 +20,15 @@ To get started, register a firebase account, create an application there and rep
 
 [Conductor] (https://github.com/bluelinelabs/Conductor) - Build View based Android applications
 
+[Retrofit](https://square.github.io/retrofit/) - REST
+
+
+[Dagger2](https://google.github.io/dagger/) - Dependency injection
+
+[RxJava](https://github.com/ReactiveX/RxJava)
+
+
+
 [Icons By Kameleon pics](http://www.kameleon.pics)
 
 [Background image from freepik](http://www.freepik.com/)
