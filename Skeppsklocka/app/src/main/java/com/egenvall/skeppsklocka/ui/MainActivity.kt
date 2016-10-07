@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        App.graph.inject(this)
         setContentView(R.layout.activity_main_kotlin)
+        App.graph.inject(this)
         FirebaseMessaging.getInstance().subscribeToTopic("push")
         mRouter = Conductor.attachRouter(this, controller_container, savedInstanceState)
         if (!mRouter.hasRootController()) {
@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun checkBundleForMessage() : String?{
+        Log.d("LAUNCH","CHECK BUNDLE")
         val notificationMessage = intent?.getStringExtra("message")
         intent.removeExtra("message")
         return notificationMessage ?: null

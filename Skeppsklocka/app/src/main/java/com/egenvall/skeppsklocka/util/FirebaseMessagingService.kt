@@ -44,7 +44,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
      * @param messageBody FCM message body received.
      */
     private fun sendNotification(messageBody: String) {
-        val builder = NotificationCompat.Builder(this).setContentTitle("Crepido").setContentText("Milstolpe!!")
+        val builder = NotificationCompat.Builder(this).setContentTitle("Title").setContentText("Text")
         val notificationIntent = intentFor<MainActivity>("message" to messageBody)
         val contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT)
