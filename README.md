@@ -9,6 +9,8 @@ App in Foreground(left) and app not open at all (right)
 ##Android application written in Kotlin for learning purposes, using
 
 To get started, register a firebase account, create an application there and replace the google-services.json in the root folder. In NetworkModule replace the accessKey found under Settings -> Cloud Messaging in the firebase console for your project.
+
+or, try the [Debug APK](https://goo.gl/DYa1Fa)
    
     fun provideAccessKey(): String {
         return "key=yourFirebaseServerkey";
